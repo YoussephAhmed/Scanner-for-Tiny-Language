@@ -36,24 +36,34 @@ def isIdentfier(string):
 
 
 def reservedWords(string):
-    if string == "if":
-        return 1
-    elif string == "then":
-        return 1
-    elif string == "else":
-        return 1
-    elif string == "read":
-        return 1
-    elif string == "end":
-        return 1
-    elif string == "repeat":
-        return 1
-    elif string == "write":
-        return 1
-    elif string == "until":
-        return 1    
+    words = ["if" , "then" , "else" , "read" , "end" , "repeat", "write", "until"]
+
+    for i in range (0,8) :
+        if string == words[i]:
+            print(1)
+            return 1
     else:
-        return 0 
+        print(0)    
+        return 0
+
+    # if string == "if":
+    #     return 1
+    # elif string == "then":
+    #     return 1
+    # elif string == "else":
+    #     return 1
+    # elif string == "read":
+    #     return 1
+    # elif string == "end":
+    #     return 1
+    # elif string == "repeat":
+    #     return 1
+    # elif string == "write":
+    #     return 1
+    # elif string == "until":
+    #     return 1    
+    # else:
+    #     return 0 
 
 
    
@@ -68,6 +78,18 @@ def isSpecial(string):
         print(0)
         return 0    
 
+# def classifier(string):
+#     if (isIdentfier):
+#         if (reservedWords):
+#             # pass to reserved word list
+#         esle:    
+#             # pass to identifiers list
+
+#     elif (isSpecial):
+#         # pass to sympols list
+#     elif (isNumber):
+#         #pass to numbers list 
+
 
 
 
@@ -75,3 +97,10 @@ def isSpecial(string):
 # identfier("777")     
 # isChar('?')
 # isNumber('7')
+# reservedWords("until")
+
+
+
+# words = ["if" , "then" , "else" , "read" , "end" , "repeat", "write", "until"]
+# print(words)
+# print(len(words))
