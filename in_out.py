@@ -1,20 +1,21 @@
 from functions import *
+import re
+import os
 
-classified_tokens= ""
+
+tokens = []
 
 def vaild_next_char(i,n):
-    if(i +1 > n-1):
+    if(i == n-1):
         return 0
     else:
         return 1
 
-
-
 def classify(list_of_okens):
     return type
-def print(map):
-    return
+
 def get_tokens(line):
+   # line = re.sub('[\s+]', '', line)
     state="start"
 
     token=""
@@ -23,6 +24,12 @@ def get_tokens(line):
     char=line[i]
     while(1):
         if(state=="start"):
+            if (char==' '):
+                i=i+1
+                char = line[i]
+                continue
+
+
             if isLetter(char):
                 state="1"
                 while isLetter(char)or isNumber(char):
@@ -32,7 +39,7 @@ def get_tokens(line):
                         char=line[i]
                 state="acceptance"
 
-            elif isLetter(char):
+            elif isNumber(char):
                 state = "2"#number
                 while isNumber(char):
                     token += char
@@ -40,32 +47,40 @@ def get_tokens(line):
                         i = i + 1
                         char = line[i]
                 state = "acceptance"
-            elif isLetter(char):
+            elif isSpecial(char):
                 state = "3"  # number
                 while isSpecial(char):
                     token += char
                     if (vaild_next_char(i, len(line))):
                         i = i + 1
                         char = line[i]
+                    else:
+                        break
                 state = "acceptance"
-        elif (state=="acceptance"):
+
+        if (state=="acceptance"):
+            state = "start"
             print(token)
+            tokens.append(token)
+            token=""
+
         if ( not (vaild_next_char(i, len(line)))):
             break
 
-
-
-
-
-    return map
-
-def read_lines():
-    lines = [line.rstrip('\n') for line in open('test.txt')]
+def read_lines(filename):
+    file = open(filename, "r")
+    lines = file.readlines()
     for line in lines:
-        get_token(line)
-        print(line)
-        print("----------")
+        get_tokens(line)
 
+    file.close()
+
+
+
+
+
+def main():
+    read_lines('test.txt')
 
 if __name__ == "__main__":
-    read_lines()
+    main()

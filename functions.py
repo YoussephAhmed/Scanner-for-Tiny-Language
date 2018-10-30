@@ -3,22 +3,19 @@ import re
 import os
 
 
-def isChar(string):
+def isLetter(string):
     match = re.match('[a-zA-Z]',string)
-    if (match):
-        print(1)
+    if (match) or (string=='_'):
         return 1
     else:
-        print(0)
         return 0
 
 def isNumber(string):
     match = re.match('[0-9]',string)
     if (match):
-        print(1)
         return 1
     else:
-        print(0)
+
         return 0
 
 
@@ -26,10 +23,8 @@ def isNumber(string):
 def isIdentfier(string):
     match = re.match('[_a-zA-Z][_a-zA-Z0-9]',string)
     if (match):
-        print(1)
         return 1
     else:
-        print(0)
         return 0
 
 
@@ -40,10 +35,9 @@ def reservedWords(string):
 
     for i in range (0,8) :
         if string == words[i]:
-            print(1)
             return 1
     else:
-        print(0)    
+
         return 0
 
     # if string == "if":
@@ -70,13 +64,15 @@ def reservedWords(string):
 
 
 def isSpecial(string):
-     match = re.match( '[< > * () _ + := - ; / ]' , string)
+     match = re.match('[< > * () _ + := - ; / ]', string)
+
+     if string == ' ':
+         return 0
+
      if (match):
-        print(1)
         return 1
      else:
-        print(0)
-        return 0    
+        return 0
 
 # def classifier(string):
 #     if (isIdentfier):
