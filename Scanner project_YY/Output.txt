@@ -1,0 +1,4 @@
+x_1, Identfier
+=, Special Symbol
+5, Number
+;, Special Symbol
