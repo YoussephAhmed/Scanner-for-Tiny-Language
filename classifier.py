@@ -1,14 +1,11 @@
- #!/usr/bin/python
-from in_out import get_tokens
+#!/usr/bin/python
 import re
 import os
 
 words = ["if" , "then" , "else" , "read" , "end" , "repeat", "write", "until"]
- 
-tokens = []
-
 typelist = []
 valuelist = []
+tokens=[]
 
 def isChar(string):
     match = re.match('[a-zA-Z]',string)
@@ -39,11 +36,72 @@ def reservedWords(string):
         return 0
 
 def isSpecial(string):
-     match = re.match( '[< > * () /- + := - ; / ]' , string)
-     if (match):
+    match = re.match('[< > * () _ + := \- ; / ]', string)
+    if (match):
         return 1
-     else:
-        return 0    
+    else:
+        return 0 
+def vaild_next_char(i,n):
+    if(i == n-1):
+        return 0
+    else:
+        return 1
+
+def classify(list_of_okens):
+    return type
+
+def get_tokens(line):
+   # line = re.sub('[\s+]', '', line)
+    state="start"
+
+    token=""
+    #                       while len(line)!=0:
+    i=0
+    char=line[i]
+    while(1):
+        if(state=="start"):
+            if (char==' '):
+                i=i+1
+                char = line[i]
+                continue
+
+
+            if isChar(char):
+                state="1"
+                while isChar(char)or isNumber(char):
+                    token+=char
+                    if(vaild_next_char(i,len(line))):
+                        i=i+1
+                        char=line[i]
+                state="acceptance"
+
+            elif isNumber(char):
+                state = "2"#number
+                while isNumber(char):
+                    token += char
+                    if (vaild_next_char(i, len(line))):
+                        i = i + 1
+                        char = line[i]
+                state = "acceptance"
+            elif isSpecial(char):
+                state = "3"  # number
+                while isSpecial(char):
+                    token += char
+                    if (vaild_next_char(i, len(line))):
+                        i = i + 1
+                        char = line[i]
+                    else:
+                        break
+                state = "acceptance"
+
+        if (state=="acceptance"):
+            state = "start"
+            print(token)
+            tokens.append(token)
+            token=""
+
+        if ( not (vaild_next_char(i, len(line)))):
+            break
 
 def classifier(mylist):
         for i in range(0,len( mylist)):
@@ -60,18 +118,20 @@ def classifier(mylist):
                 typelist.append("a Number")
                 valuelist.append(mylist[i])
 
-
 #def printit(valuetup,typetup):
 def getstr(input):
     fh = open(input,"r")
-    for line in fh:
+    lines = fh.readlines()
+    for line in lines:
         get_tokens(line)
     fh.close()
 
 def main():
     getstr("file.txt")
-    print (tokens)
-    #classifier(tokens)
+    code = " read x ; x := x - 1 ;"
+   # get_tokens(code)
+   # print(tokens)
+    classifier(tokens)
     for i in range(0,len(valuelist)):
         print(valuelist[i] + " is " + typelist[i])
 main()
