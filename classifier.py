@@ -1,4 +1,5 @@
  #!/usr/bin/python
+from in_out import get_tokens
 import re
 import os
 
@@ -6,10 +7,9 @@ words = ["if" , "then" , "else" , "read" , "end" , "repeat", "write", "until"]
  
 tokens = ['read' , 'x' , ':=' , '3' , ';']
 
-identifiers = []
-specialones=[]
-numbers=[]
-reserved=[]
+typelist = []
+valuelist = []
+
 def isChar(string):
     match = re.match('[a-zA-Z]',string)
     if (match):
@@ -27,10 +27,8 @@ def isNumber(string):
 def isIdentfier(string):
     match = re.match('[_a-zA-Z][_a-zA-Z0-9]',string)
     if (match):
-        print(1)
         return 1
     else:
-        print(0)
         return 0
 
 def reservedWords(string):
@@ -50,18 +48,30 @@ def isSpecial(string):
 def classifier(mylist):
         for i in range(0,len( mylist)):
             if (isIdentfier(mylist[i]) and not reservedWords(mylist[i])):
-                identifiers.append(mylist[i])
+                typelist.append("Identifier")
+                valuelist.append(mylist[i])
             elif (reservedWords(mylist[i])):
-                reserved.append(mylist[i])
+                typelist.append("a Reserved word")
+                valuelist.append(mylist[i])
             elif (isSpecial(mylist[i])):
-                specialones.append(mylist[i])
+                typelist.append("Special character")
+                valuelist.append(mylist[i])
             elif (isNumber(mylist[i])):
-                numbers.append(mylist[i])
+                typelist.append("a Number")
+                valuelist.append(mylist[i])
 
-classifier(tokens)
-print('identifers:',identifiers)
-print('special' , specialones)
-print('numbers' , numbers)
-print ('reserved' , reserved)
 
+#def printit(valuetup,typetup):
+def getstr(input):
+    fh = open(input,"r")
+    for line in fh:
+        get_tokens(line)
+    fh.close()
+
+def main():
+    getstr("scan.txt")
+    classifier(tokens)
+    for i in range(0,len(valuelist)):
+        print(valuelist[i] + " is " + typelist[i])
+main()
 
